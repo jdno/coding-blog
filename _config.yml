@@ -1,0 +1,28 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            coding @ jandavid
+tagline:          'Learn from my fails'
+description:      'Documentation of my software development endeavors. Expect a lot of TDD and Ruby.'
+
+url:              http://coding.jandavid.de
+baseurl:          /
+
+author:
+  name:           'Jan David'
+  url:            https://twitter.com/mostawesomejd
+
+paginate:         5
+
+# Custom vars
+enable_disqus:    true
+
+github:
+  repo:           https://github.com/jdno
+
+gems:             [jekyll-gist, jekyll-paginate]
