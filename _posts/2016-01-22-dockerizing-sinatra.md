@@ -373,6 +373,6 @@ I hope you were able to take something away from this! If you have any questions
 or know how to do things in a smarter way, please share them with me in the
 comment section below. The same goes for bugs or errors you find in my code.
 
-Hope to see you in the next part!
+Hope to see you in the [next part]({{ page.next.url }})!
 
 _Jan David_
