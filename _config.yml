@@ -27,3 +27,10 @@ github:
   repo:           https://github.com/jdno
 
 gems:             [jekyll-gist, jekyll-paginate]
+
+# Links
+links:
+  docker:         '**[Docker](https://docker.com)**'
+  docker-compose: '**[docker-compose](http://www.docker.com/products/docker-compose)**'
+  docker-machine: '**[docker-machine](https://docs.docker.com/machine/)**'
+  sinatra:        '**[Sinatra](http://sinatrarb.com)**'
