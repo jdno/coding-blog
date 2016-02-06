@@ -10,6 +10,8 @@ single endpoint with some static content. Then, we build a
 **[Docker](https://docker.com)** container around it. In the next parts of the
 series, we will be adding a database and orchestration.
 
+> You can find the complete source code on GitHub: [jdno/docker-sinatra-api](https://github.com/jdno/docker-sinatra-api)
+
 ## A simple Sinatra app
 
 My longterm goal with this series is to get a working web service that I can use
@@ -66,7 +68,7 @@ When browsing to [localhost:4567](http://localhost:4567), you can see the
 output `"Hello World!"`
 
 The beauty of **[Sinatra](http://sinatrarb.com)** is that you really don't need
-anything else to get started. Later on, we will be adding a database, but 
+anything else to get started. Later on, we will be adding a database, but
 now this is the application we are working with.
 
 ### Preparing for Passenger
@@ -120,7 +122,7 @@ the official GitHub repository for the Docker images made by
 **[Passenger](https://www.phusionpassenger.com)** that come with different
 flavors. There are images for **Ruby**, **Node.js** and **Meteor**, and even
 more if you want more customization. It should not come as a suprise that we
-choose the **Ruby** version. When writing this post, the most current version 
+choose the **Ruby** version. When writing this post, the most current version
 supported is **Ruby 2.2.3** in the `phusion/passenger-ruby22` image.
 
 ### Our first Dockerfile
@@ -268,7 +270,7 @@ RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
 
 # Create virtual host
-ADD nginx/virtual_host.conf /etc/nginx/sites-enabled/app.conf
+ADD docker/vhost.conf /etc/nginx/sites-enabled/app.conf
 
 # Prepare folders
 RUN mkdir /home/app/webapp
@@ -372,6 +374,8 @@ our app, and after that build a database container.
 I hope you were able to take something away from this! If you have any questions
 or know how to do things in a smarter way, please share them with me in the
 comment section below. The same goes for bugs or errors you find in my code.
+
+> You can find the complete source code on GitHub: [jdno/docker-sinatra-api](https://github.com/jdno/docker-sinatra-api)
 
 Hope to see you in the [next part]({{ page.next.url }})!
 
