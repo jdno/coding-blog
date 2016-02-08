@@ -24,7 +24,7 @@ If you want to learn even more about me, check out my <b>personal homepage</b>:
 <b><a target="_blank" href="http://jandavid.de">www.jandavid.de</a></b>
 
 <p class="message">
-  This blog is built using <a href="www.jekyllrb.com">Jekyll</a> with the
+  This blog is built using <a href="http://www.jekyllrb.com">Jekyll</a> with the
   beautiful theme <a href="http://hyde.getpoole.com">Hyde</a> by
   <a href="https://twitter.com/mdo">@mdo</a>.
 </p>
