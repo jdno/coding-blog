@@ -137,6 +137,6 @@ If you want to browse the code, you can find it on
 [GitHub](https://github/jdno/docker-sinatra-api). For a snapshot of this
 specific version, see [version 0.2.0](https://github.com/jdno/docker-sinatra-api/tree/0.2.0).
 
-Hope to see you in the next part!
+Hope to see you in the [next part]({{ page.next.url }})!
 
 _Jan David_
