@@ -6,7 +6,7 @@ highlighter:      pygments
 permalink:        pretty
 
 # Setup
-title:            coding @ jandavid
+title:            'coding @ jandavid'
 tagline:          'Learn from my fails'
 description:      'Documentation of my software development endeavors. Expect a lot of TDD and Ruby.'
 
@@ -30,7 +30,13 @@ gems:             [jekyll-gist, jekyll-paginate]
 
 # Links
 links:
+  active_record:  '**[ActiveRecord](http://guides.rubyonrails.org/active_record_basics.html)**'
   docker:         '**[Docker](https://docker.com)**'
-  docker-compose: '**[docker-compose](http://www.docker.com/products/docker-compose)**'
+  docker-compose: '**[docker-compose](https://www.docker.com/products/docker-compose)**'
+  docker-hub:     '**[Docker Hub](https://hub.docker.com)**'
   docker-machine: '**[docker-machine](https://docs.docker.com/machine/)**'
+  postgres:       '**[PostgreSQL](http://postgresql.org)**'
+  rails:          '**[Ruby on Rails](http://rubyonrails.org)**'
+  rake:           '**[Rake](http://docs.seattlerb.org/rake/)**'
+  ruby:           '**[Ruby](https://www.ruby-lang.org/)**'
   sinatra:        '**[Sinatra](http://sinatrarb.com)**'
