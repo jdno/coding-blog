@@ -74,7 +74,7 @@ is more than enough.
 We add the `docker-compose.yml` file to the top-level folder of our project.
 The directory should look like this:
 
-```bash
+{% highlight bash %}
 $ tree .
 .
 ├── Dockerfile
@@ -85,24 +85,24 @@ $ tree .
 ├── docker
 │   └── vhost.conf
 └── docker-compose.yml
-```
+{% endhighlight %}
 
 Let's open the file and start by defining our application as a new _service_. We
 name it `api`. You define a service by adding it as a new top-level element in
 the `docker-compose.yml` file:
 
-```docker
+{% highlight docker %}
 api:
-```
+{% endhighlight %}
 
 The next step is to tell {{ site.links.docker-compose }} how to build the
 service. This is done with the `build` directive, which should point to the
 service's `Dockerfile`. In our case, this would look like this:
 
-```docker
+{% highlight docker %}
 api:
   build: .
-```
+{% endhighlight %}
 
 Great job! You can now start the application by executing `docker-compose up`.
 You should see a bunch of output that either tells you that the application got
@@ -114,12 +114,12 @@ not mapped to a port on either the {{ site.links.docker-machine }} or
 **localhost**. We need to tell {{ site.links.docker-compose }} to do that with
 the `ports` directive:
 
-```docker
+{% highlight docker %}
 api:
   build: .
   ports:
     - "4567:80"
-```
+{% endhighlight %}
 
 This tells {{ site.links.docker-compose }} to map **port 4567** on **localhost**
 (or {{ site.links.docker-machine }}) to **port 80** on the **container**. After

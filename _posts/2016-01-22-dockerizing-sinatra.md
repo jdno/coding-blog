@@ -29,7 +29,7 @@ it really easy to return JSON.
 
 Here is the complete `Gemfile`:
 
-```Ruby
+{% highlight ruby %}
 source 'https://rubygems.org'
 
 # Fix Sinatra version to ensure compatibility with upcoming releases
@@ -37,7 +37,7 @@ gem 'sinatra', '1.4.6'
 
 # Use JSON extension provided by the Sinatra::Contrib project
 gem 'sinatra-contrib', '~> 1.4.2'
-```
+{% endhighlight %}
 
 Run `bundle install` to pull in the dependencies and get ready for the next
 step.
@@ -48,14 +48,14 @@ step.
 us to create a web application with just a few lines of code. Create a file and
 call it `app.rb`, and paste in the following code:
 
-```Ruby
+{% highlight ruby %}
 require 'sinatra'
 require 'sinatra/json'
 
 get '/' do
   json 'Hello World!'
 end
-```
+{% endhighlight %}
 
 For everyone familiar with **[Sinatra](http://sinatrarb.com)**, this code should
 be straightforward. Otherwise, check out the documentation:
@@ -83,12 +83,12 @@ For all of these, you need to add a _rackup file_ called `config.ru`. This file
 tells the application servers how to start **Rack**. Simply create it in the
 same directory as your app, and paste the following lines in it:
 
-```ruby
+{% highlight ruby %}
 require 'sinatra'
 require File.expand_path '../app.rb', __FILE__
 
 run Sinatra::Application
-```
+{% endhighlight %}
 
 Now we are ready to go to the next section and put everything in a container.
 
@@ -134,16 +134,16 @@ them. Otherwise, you won't be able to build identical images from the same
 `Dockerfile` once a new version gets released. And that kinda destroys the whole
 purpose of it. Below, you find the first line of our `Dockerfile`:
 
-```docker
+{% highlight docker %}
 FROM phusion/passenger-ruby22:0.9.18
-```
+{% endhighlight %}
 
 The next few lines are taken directly from the documentation that is available
 on [phusion/passenger-docker](https://github.com/phusion/passenger-docker). We
 set the environment variable `HOME`, run through the base image's `init`
 process, and enable **nginx** and **Passenger**:
 
-```docker
+{% highlight docker %}
 # Set correct environment variables.
 ENV HOME /root
 
@@ -152,7 +152,7 @@ CMD ["/sbin/my_init"]
 
 # Enable nginx and Passenger
 RUN rm -f /etc/service/nginx/down
-```
+{% endhighlight %}
 
 Next, we have to install our app and configure the application server. Before we
 do that, though, I want to improve the directory structure. To configure
@@ -160,7 +160,7 @@ do that, though, I want to improve the directory structure. To configure
 the same folder as our app, but instead keep the app and the Docker
 configuration separated. This is what I went with:
 
-```
+{% highlight bash %}
 $ tree .
 .
 ├── Dockerfile
@@ -170,26 +170,26 @@ $ tree .
 │   └── app.rb
 └── docker
     └── vhost.conf
-```
+{% endhighlight %}
 
 Having cleaned up the directory, we can continue with the configuration. In the
 `Dockerfile`, we can add the following lines. The first deletes **nginx's**
 default site, and the second adds our site.
 
-```docker
+{% highlight docker %}
 # Remove the default site
 RUN rm /etc/nginx/sites-enabled/default
 
 # Create virtual host
 ADD docker/vhost.conf /etc/nginx/sites-enabled/app.conf
-```
+{% endhighlight %}
 
 Of course, we need to provide some configuration for the site. Right now,
 `vhost.conf` is either empty or not existing. The following `server` block
 tells **nginx** to listen on port 80, enables **Passenger** and points it to the
 directory our app lives in.
 
-```nginx
+{% highlight nginx %}
 server {
     listen 80;
     server_name localhost;
@@ -200,17 +200,17 @@ server {
 
     passenger_ruby /usr/bin/ruby2.2;
 }
-```
+{% endhighlight %}
 
 After configuring the application server, the only thing missing is our app.
 The base image already includes a user account that has no elevated privileges,
 and we will use this user to run our app. So we start by creating a directory in
 the user's home:
 
-```docker
+{% highlight docker %}
 # Prepare folders
 RUN mkdir /home/app/webapp
-```
+{% endhighlight %}
 
 Next, we want to copy the app and install its dependencies. To take advantage of
 **Docker's** caching capabilities, we run `bundle` in its own layer. This approach
@@ -219,32 +219,32 @@ is taken directly from **Docker's** article on combining
 copy the files `Gemfile` and `Gemfile.lock` to the temporary folder, and execute
 `bundle install` in it:
 
-```docker
+{% highlight docker %}
 # Run Bundle in a cache efficient way
 WORKDIR /tmp
 COPY app/Gemfile /tmp/
 COPY app/Gemfile.lock /tmp/
 RUN bundle install
-```
+{% endhighlight %}
 
 Now, the only thing missing is our app. This step is really straightforward,
 since we are only going to copy the app to the destination directory. To be
 absolutely sure all permissions are set correctly, we lastly change the owner of
 the app to the user that used by **Passenger**.
 
-```docker
+{% highlight docker %}
 # Add our app
 COPY app /home/app/webapp
 RUN chown -R app:app /home/app
-```
+{% endhighlight %}
 
 There is one last thing we do, and that is clean up after `apt-get` and `bundle`
 to decrease the image size.
 
-```docker
+{% highlight docker %}
 # Clean up when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-```
+{% endhighlight %}
 
 If you put everything together, you end up with a nice `Dockerfile` that extends
 the official image for **Passenger** and provides a performant and scalable
@@ -252,7 +252,7 @@ foundation for the future.
 
 For the record, here is the complete file:
 
-```docker
+{% highlight docker %}
 FROM phusion/passenger-ruby22:0.9.18
 
 MAINTAINER Jan David <jandavid@awesometechnology.de>
@@ -287,7 +287,7 @@ RUN chown -R app:app /home/app
 
 # Clean up when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-```
+{% endhighlight %}
 
 ### Building the image
 
@@ -295,16 +295,16 @@ Now that we have everything in place, we can finally dockerize our app by
 building an image. This is done with the following command (substitute the name
 with your own name):
 
-```bash
+{% highlight bash %}
 $ docker build -t jandavid/sinatra-example .
-```
+{% endhighlight %}
 
 Running the command will give you a lot of output, which should end with a line
 like this:
 
-```
+{% highlight bash %}
 Successfully built b0442d244543
-```
+{% endhighlight %}
 
 **Congratulations! You dockerized Sinatra.**
 
@@ -326,9 +326,9 @@ though, from a port on the host system to the exposed port on the container.
 You start containers with the `docker run` command. The command has the
 following syntax:
 
-```
+{% highlight bash %}
 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
-```
+{% endhighlight %}
 
 Looking at the command and what we have built, the following traits have to be
 kept in mind:
@@ -339,9 +339,9 @@ kept in mind:
 Putting everything together, this gives us the following command to start our
 app:
 
-```
+{% highlight bash %}
 $ docker run -p 4567:80 jandavid/sinatra-example
-```
+{% endhighlight %}
 
 Depending on your host system, you can now access the app at one of the
 following URLs:
